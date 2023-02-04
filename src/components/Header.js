@@ -1,11 +1,46 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Header extends Component {
   render() {
+    const { email, total, currency } = this.props;
     return (
-      <div>Header</div>
+      <div className="header-container">
+        <div>
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3814/3814848.png"
+            alt="Ícone de uma carteira"
+            className="wallet-image"
+          />
+        </div>
+        <div className="header-info">
+          <span data-testid="email-field">
+            {`Email: ${email}`}
+          </span>
+          <div>
+            <span data-testid="total-field">
+              {`Despesa Total: R$ ${parseFloat(total).toFixed(2)} `}
+            </span>
+            <span data-testid="header-currency-field">
+              {`${currency}`}
+            </span>
+          </div>
+        </div>
+      </div>
     );
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+  total: state.wallet.total,
+  currency: state.wallet.currency,
+});
+
+Header.propTypes = {
+  email: PropTypes.string.isRequired,
+  total: PropTypes.number.isRequired,
+  currency: PropTypes.string.isRequired,
+};
+export default connect(mapStateToProps)(Header);
