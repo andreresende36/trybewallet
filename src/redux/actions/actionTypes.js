@@ -1,1 +1,2 @@
-export const SAVE_USER = 'SAVE_USER';
+export const SUBMIT_USER_FORM = 'SUBMIT_USER_FORM';
+export const RECEIVE_CURRENCIES = 'RECEIVE_CURRENCIES';

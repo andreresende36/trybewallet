@@ -1,9 +1,26 @@
 // Coloque aqui suas actions
-import { SAVE_USER } from './actionTypes';
+import getCurrencies from '../../services/api';
+import {
+  SUBMIT_USER_FORM,
+  RECEIVE_CURRENCIES,
+} from './actionTypes';
 
-const saveUser = (email) => ({
-  type: SAVE_USER,
+const submitUserForm = (email) => ({
+  type: SUBMIT_USER_FORM,
   payload: email,
 });
 
-export { saveUser, SAVE_USER };
+const receiveCurrencies = (currencies) => ({
+  type: RECEIVE_CURRENCIES,
+  payload: currencies,
+});
+
+const fetchCurrencies = () => async (dispatch) => {
+  const currencies = await getCurrencies();
+  dispatch(receiveCurrencies(currencies));
+};
+
+export {
+  submitUserForm,
+  fetchCurrencies,
+};

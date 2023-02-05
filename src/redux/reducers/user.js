@@ -1,11 +1,11 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
-import { SAVE_USER } from '../actions';
+import { SUBMIT_USER_FORM } from '../actions/actionTypes';
 
 const INITIAL_STATE = { email: '' };
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case SAVE_USER:
+  case SUBMIT_USER_FORM:
     return {
       ...state,
       email: action.payload,
