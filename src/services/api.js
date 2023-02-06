@@ -11,4 +11,14 @@ const getCurrencies = () => {
   return currencies;
 };
 
-export default getCurrencies;
+const getExchangeRates = () => {
+  const exchangeRates = fetch(BASE_URL)
+    .then((response) => response.json())
+    .then((data) => {
+      delete data.USDT;
+      return data;
+    });
+  return exchangeRates;
+};
+
+export { getCurrencies, getExchangeRates };

@@ -19,11 +19,12 @@ class Header extends Component {
             {`Email: ${email}`}
           </span>
           <div>
+            <span>Despesa Total: R$ </span>
             <span data-testid="total-field">
-              {`Despesa Total: R$ ${parseFloat(total).toFixed(2)} `}
+              {`${parseFloat(total).toFixed(2)}`}
             </span>
             <span data-testid="header-currency-field">
-              {`${currency}`}
+              {` ${currency}`}
             </span>
           </div>
         </div>
@@ -36,6 +37,7 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
   total: state.wallet.total,
   currency: state.wallet.currency,
+  expenses: state.wallet.expenses,
 });
 
 Header.propTypes = {
@@ -43,4 +45,5 @@ Header.propTypes = {
   total: PropTypes.number.isRequired,
   currency: PropTypes.string.isRequired,
 };
+
 export default connect(mapStateToProps)(Header);
