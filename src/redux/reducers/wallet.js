@@ -2,6 +2,7 @@
 import {
   RECEIVE_CURRENCIES,
   SUBMIT_NEW_EXPENSE,
+  DELETE_EXPENSE,
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
@@ -33,6 +34,12 @@ const walletReducer = (state = INITIAL_STATE, action) => {
         tag: action.tag,
         exchangeRates: action.exchangeRates,
       }],
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter((item) => item.id !== Number(action.id)),
+      total: state.total - action.value,
     };
   default:
     return state;

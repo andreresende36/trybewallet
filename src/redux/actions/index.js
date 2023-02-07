@@ -4,6 +4,7 @@ import {
   SUBMIT_USER_FORM,
   RECEIVE_CURRENCIES,
   SUBMIT_NEW_EXPENSE,
+  DELETE_EXPENSE,
 } from './actionTypes';
 
 const submitUserForm = (email) => ({
@@ -27,6 +28,12 @@ const submitNewExpense = (data, exchangeRates, ask) => ({
   ask,
 });
 
+const deleteExpense = (id, value) => ({
+  type: DELETE_EXPENSE,
+  id,
+  value,
+});
+
 const fetchCurrencies = () => async (dispatch) => {
   const currencies = await getCurrencies();
   dispatch(receiveCurrencies(currencies));
@@ -43,4 +50,5 @@ export {
   fetchCurrencies,
   fetchExpenses,
   submitNewExpense,
+  deleteExpense,
 };
