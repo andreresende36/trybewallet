@@ -1,5 +1,5 @@
-import mockData from './mockData';
-import { getCurrencies, getExchangeRates } from '../../services/api';
+import mockData from './helpers/mockData';
+import { getCurrencies, getExchangeRates } from '../services/api';
 
 describe('Testa as funções que conectam com a API', () => {
   it('Teste se o retorno do array de moedas da API está correto', async () => {
