@@ -3,6 +3,8 @@ import {
   RECEIVE_CURRENCIES,
   SUBMIT_NEW_EXPENSE,
   DELETE_EXPENSE,
+  SELECT_EXPENSE_TO_EDIT,
+  FINISH_EDIT_EXPENSE,
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
@@ -11,6 +13,27 @@ const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   idCount: 0,
+  editingExpense: {},
+  isEditing: false,
+};
+
+const updateChanges = (item, state, action) => {
+  const array = ['value', 'description', 'currency', 'method', 'tag'];
+  if (item.id === state.id) {
+    array.forEach((key) => {
+      item[key] = action.changes[key];
+    });
+    return item;
+  }
+  return item;
+};
+
+const getTotalValue = (state, changes) => {
+  const { total, editingExpense } = state;
+  const { value, exchangeRates, currency } = editingExpense;
+  const oldValue = (Number(value) * Number(exchangeRates[currency].ask));
+  const newValue = (Number(changes.value) * Number(exchangeRates[changes.currency].ask));
+  return total - oldValue + newValue;
 };
 
 const walletReducer = (state = INITIAL_STATE, action) => {
@@ -41,6 +64,22 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       expenses: state.expenses.filter((item) => item.id !== Number(action.id)),
       total: state.total - action.value,
     };
+  case SELECT_EXPENSE_TO_EDIT:
+    return {
+      ...state,
+      editingExpense: action.expense,
+      isEditing: true,
+    };
+  case FINISH_EDIT_EXPENSE:
+    return {
+      ...state,
+      editingExpense: {},
+      isEditing: false,
+      expenses:
+        state.expenses.map((item) => updateChanges(item, state.editingExpense, action)),
+      total: getTotalValue(state, action.changes),
+    };
+
   default:
     return state;
   }

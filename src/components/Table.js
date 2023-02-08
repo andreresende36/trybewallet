@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteExpense } from '../redux/actions';
+import { deleteExpense, selectExpenseToEdit } from '../redux/actions';
 
 class Table extends Component {
   handleDeleteButton = ({ target: { id, value } }) => {
     const { dispatch } = this.props;
     dispatch(deleteExpense(id, value));
+  };
+
+  handleEditButton = ({ target: { value } }) => {
+    const { dispatch } = this.props;
+    dispatch(selectExpenseToEdit(JSON.parse(value)));
   };
 
   fillExpensesTable = () => {
@@ -28,7 +33,14 @@ class Table extends Component {
         </td>
         <td>Real</td>
         <td>
-          <button type="button" data-testid="edit-btn">Editar</button>
+          <button
+            type="button"
+            data-testid="edit-btn"
+            onClick={ this.handleEditButton }
+            value={ JSON.stringify(item) }
+          >
+            Editar
+          </button>
           <button
             type="button"
             data-testid="delete-btn"
